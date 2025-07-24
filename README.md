@@ -7,7 +7,8 @@ step 2:- git clone
      <br>
      clone:- it is mainly use for copy the file to your local computer 
      <br>
-     clone cmd:- git clone <repo-link>     
+     clone cmd:- git clone <repo-link> 
+     <br>
 step 3:- Local Repository / Remote Repository
      <br>
      Local Repository: The Git repo on your computer.
