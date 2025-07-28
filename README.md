@@ -115,4 +115,36 @@ This section details essential Git commands and concepts.
     * `--mixed` (default): Moves `HEAD`, unstages changes.
     * `--hard`: Moves `HEAD`, discards all changes. (Use with caution!)
 
+### 11. `git restore`
+
+* **What it is:** Used to undo local modifications to files, either in the working directory (unstaged changes) or in the staging area (staged changes). It provides a clearer way to discard changes compared to older methods.
+* **How to use:**
+    * To discard unstaged changes in the working directory:
+        ```bash
+        git restore <file_name>
+        ```
+    * To unstage changes (move from staging to working directory):
+        ```bash
+        git restore --staged <file_name>
+        ```
+    * To restore a file to its state at a specific commit:
+        ```bash
+        git restore --source <commit_hash> <file_name>
+        ```
+
+### 12. `git rebase`
+
+* **What it is:** Used to move or combine a sequence of commits to a new base commit. It rewrites commit history by re-applying commits from one branch on top of another, often used to create a clean, linear history.
+* **How to use:**
+    * To rebase your current branch onto another branch (integrating changes cleanly):
+        ```bash
+        git rebase <base_branch_name>
+        ```
+    * To perform an interactive rebase (e.g., to squash, edit, or reorder commits):
+        ```bash
+        git rebase -i <commit_ish>
+        # Example: git rebase -i HEAD~3 (for the last 3 commits)
+        # Example: git rebase -i main (for commits on current branch not on main)
+        ```
+
 ---
