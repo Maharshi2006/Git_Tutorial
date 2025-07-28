@@ -115,4 +115,114 @@ This section details essential Git commands and concepts.
     * `--mixed` (default): Moves `HEAD`, unstages changes.
     * `--hard`: Moves `HEAD`, discards all changes. (Use with caution!)
 
+### 11. `git restore`
+
+* **What it is:** Used to undo local modifications to files, either in the working directory (unstaged changes) or in the staging area (staged changes). It provides a clearer way to discard changes compared to older methods.
+* **How to use:**
+    * To discard unstaged changes in the working directory:
+        ```bash
+        git restore <file_name>
+        ```
+    * To unstage changes (move from staging to working directory):
+        ```bash
+        git restore --staged <file_name>
+        ```
+    * To restore a file to its state at a specific commit:
+        ```bash
+        git restore --source <commit_hash> <file_name>
+        ```
+
+### 12. `git rebase`
+
+* **What it is:** Used to move or combine a sequence of commits to a new base commit. It rewrites commit history by re-applying commits from one branch on top of another, often used to create a clean, linear history.
+* **How to use:**
+    * To rebase your current branch onto another branch (integrating changes cleanly):
+        ```bash
+        git rebase <base_branch_name>
+        ```
+    * To perform an interactive rebase (e.g., to squash, edit, or reorder commits):
+        ```bash
+        git rebase -i <commit_ish>
+        # Example: git rebase -i HEAD~3 (for the last 3 commits)
+        # Example: git rebase -i main (for commits on current branch not on main)
+        ```
+
+---
+## 🚀 Typical Git Workflow
+
+This section outlines a common development workflow using the Git commands explained above. This flow helps maintain a clean, collaborative, and organized project history.
+
+1.  **Start a New Feature/Fix:**
+    * First, ensure your `main` (or `master`) branch is up-to-date:
+        ```bash
+        git checkout main
+        git pull origin main
+        ```
+    * Create a new branch for your work:
+        ```bash
+        git checkout -b feature/your-feature-name
+        ```
+
+2.  **Make Changes & Commit Locally:**
+    * Modify, add, or delete files as needed for your feature.
+    * Stage your changes:
+        ```bash
+        git add .
+        ```
+    * Commit your changes with a descriptive message:
+        ```bash
+        git commit -m "feat: implement X functionality"
+        ```
+    * Repeat this step for logical units of work.
+
+3.  **Handle Interruptions (Optional):**
+    * If you need to switch branches urgently without committing your work:
+        ```bash
+        git stash
+        # ... do other work ...
+        git stash pop # To bring back your changes
+        ```
+
+4.  **Keep Your Branch Updated (Optional, but Recommended):**
+    * Before pushing or creating a Pull Request, you might want to bring in the latest changes from `main` to avoid large merge conflicts later.
+        ```bash
+        git fetch origin
+        git rebase origin/main # Or git merge origin/main
+        ```
+
+5.  **Share Your Work (Push to Remote):**
+    * Push your feature branch to the remote repository:
+        ```bash
+        git push -u origin feature/your-feature-name
+        ```
+
+6.  **Merge into Main (via Pull Request):**
+    * Typically, you'd open a **Pull Request (PR)** or **Merge Request (MR)** on your Git hosting platform (GitHub, GitLab, Bitbucket).
+    * After review and approval, the branch is merged into `main`. The underlying Git operation is `git merge`.
+
+7.  **Clean Up:**
+    * After your feature branch is successfully merged into `main` (and often after the PR is closed), you can delete the local and remote feature branches:
+        ```bash
+        git checkout main                     # Switch back to main
+        git pull origin main                  # Get the latest changes (including your merged feature)
+        git branch -d feature/your-feature-name # Delete local branch
+        git push origin --delete feature/your-feature-name # Delete remote branch
+        ```
+
+8.  **Undoing Changes (If Needed):**
+    * **Revert a bad commit that's already pushed:**
+        ```bash
+        git revert <bad_commit_hash>
+        git push origin main
+        ```
+    * **Discard local uncommitted changes:**
+        ```bash
+        git restore . # Discard all unstaged changes
+        ```
+    * **Undo local commits not yet pushed (use with caution):**
+        ```bash
+        git reset --soft HEAD~1 # Undo last commit, keep changes staged
+        git reset --hard HEAD~1 # Undo last commit, discard all changes
+        ```
+
 ---
