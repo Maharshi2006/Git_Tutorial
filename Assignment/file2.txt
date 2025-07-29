@@ -1,2 +1,2 @@
 make new branch
-i want o merge new-feature to main branch
+i want o merge new-feature to main branch.
